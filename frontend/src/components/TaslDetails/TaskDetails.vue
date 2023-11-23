@@ -98,7 +98,7 @@
 
 <script setup>
 import { ref, watchEffect } from 'vue';
-import { useTaskStore } from 'src/stores/taskStore';
+import { useTaskStore } from '../../stores/taskStore';
 import { Notify } from 'quasar';
 
 const formData = ref({});

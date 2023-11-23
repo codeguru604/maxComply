@@ -27,7 +27,7 @@ describe('TaskList.vue', () => {
 				};
 			},
 		});
-
+		console.log(wrapper.text());
     // Check if the task names and subheadings are rendered
 		expect(wrapper.text()).toContain('Task 1');
 		expect(wrapper.text()).toContain('Subheading 1');

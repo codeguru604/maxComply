@@ -31,7 +31,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useTaskStore } from 'src/stores/taskStore';
+import { useTaskStore } from '../../stores/taskStore';
 import { Notify } from 'quasar';
 const loading = ref(false);
 const taskStore = useTaskStore();
