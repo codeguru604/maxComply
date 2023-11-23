@@ -1,0 +1,52 @@
+// app global css in SCSS form
+@import './quasar.variables.scss';
+.page-container {
+    display: flex;
+    .list-container {
+        width: 550px;
+        border-right: solid;
+        border-width: 1px;
+        border-color: $grey;
+        .list-item {
+            padding: 20px;
+            .list-item-title {
+                font-size: 18px;
+                padding-bottom: 5px;
+            }
+        }
+    }
+    .task-detail {
+        padding: 20px 40px;
+        .task-title {
+            font-size: 30px;
+        }
+        .field-label {
+            padding-top: 3px;
+            font-size: 16px;
+        }
+        .field-sublabel {
+            padding-top: 3px;
+        }
+        .form-submit {
+            float: right;
+            margin-top: 20px;
+            background-color: $primary;
+            color: white;
+        }
+        .field-area {
+            margin-top: 30px;
+        }
+        .field-textarea {
+            width: 100%;
+        }
+        .field-input {
+            margin-top: 10px;
+        }
+        .field-upload {
+            margin-top: 30px;
+        }
+        .field-uploader {
+            width: 100%;
+        }
+    }
+}
