@@ -85,6 +85,11 @@ yarn dev
 yarn test
 ```
 
+### Get Shapshot while test
+```bash
+yarn test -- -u
+```
+
 ### Lint the files
 ```bash
 yarn lint

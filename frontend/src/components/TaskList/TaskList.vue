@@ -5,12 +5,23 @@
 		<q-toolbar>
 			<q-toolbar-title>Task List</q-toolbar-title>
 		</q-toolbar>
+		<q-input
+			v-model="filterData"
+			outlined
+			label="Search List..."
+			class="list-search"
+			@keyup="changeFilter"
+		>
+			<template #prepend>
+				<q-icon name="search" />
+			</template>
+		</q-input>
 		<q-list
 			bordered
 			separator
 		>
 			<q-item
-				v-for="task in taskStore.tasks"
+				v-for="task in listData"
 				:key="task.id"
 				v-ripple
 				outlined
@@ -37,6 +48,8 @@ import { useTaskStore } from '../../stores/taskStore';
 import { Notify } from 'quasar';
 const loading = ref(false);
 const taskStore = useTaskStore();
+const filterData = ref('');
+const listData = ref([]);
 
 const showNotify = (message, color, loading) => {
 	Notify.create({
@@ -47,7 +60,15 @@ const showNotify = (message, color, loading) => {
 		timeout: 2000,
 	});
 };
-
+const changeFilter = () => {
+	if (filterData.value) {
+		listData.value = taskStore.tasks.filter(task => {
+			return task.name.toUpperCase().includes(filterData.value.toUpperCase());
+		});
+	} else {
+		listData.value = taskStore.tasks;
+	}
+};
 const selectTask = (taskId) => {
 	loading.value = true;
 	showNotify('Loading', 'blue', true);
@@ -60,6 +81,8 @@ onMounted(() => {
 	loading.value = true;
 	taskStore.fetchTasks().then(() => {
 		if (taskStore.tasks.length > 0) {
+			listData.value = taskStore.tasks;
+			changeFilter();
 			selectTask(taskStore.tasks[0].id);
 		}
 		loading.value = false;

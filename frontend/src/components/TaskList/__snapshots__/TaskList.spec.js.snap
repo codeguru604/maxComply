@@ -9,6 +9,12 @@ exports[`TaskList renders a task list 1`] = `
       Task List
     </q-toolbar-title>
   </q-toolbar>
+  <q-input
+    class="list-search"
+    label="Search List..."
+    modelvalue=""
+    outlined=""
+  />
   <q-list
     bordered=""
     separator=""
