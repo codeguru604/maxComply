@@ -1,5 +1,7 @@
 <template>
-	<div className="list-container">
+	<div
+		className="list-container"
+	>
 		<q-toolbar>
 			<q-toolbar-title>Task List</q-toolbar-title>
 		</q-toolbar>

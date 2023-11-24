@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskList renders a task list 1`] = `
+<div
+  class="list-container"
+>
+  <q-toolbar>
+    <q-toolbar-title>
+      Task List
+    </q-toolbar-title>
+  </q-toolbar>
+  <q-list
+    bordered=""
+    separator=""
+  >
+    
+    <q-item
+      class="list-item"
+      clickable=""
+      outlined=""
+    >
+      <q-item-section>
+        <q-item-label
+          class="list-item-title"
+        >
+          Task 1
+        </q-item-label>
+        <q-item-label
+          caption=""
+        >
+          Subtask 1
+        </q-item-label>
+      </q-item-section>
+    </q-item>
+    
+  </q-list>
+</div>
+`;

@@ -104,7 +104,7 @@ import { Notify } from 'quasar';
 const formData = ref({});
 const selectedTask = ref(null);
 const taskStore = useTaskStore();
-const submitting = ref(false);
+const submitting = ref(true);
 
 const showNotify = (message, color) => {
 	Notify.create({
@@ -136,9 +136,8 @@ const getColSpan = (size) => {
 	};
 };
 const submitForm = async () => {
-	submitting.value = true;
-
 	const taskId = selectedTask.value.id;
+
 	try {
 		await taskStore.submitTaskForm(taskId, formData.value);
 		showNotify('Form submitted successfully!', 'green');

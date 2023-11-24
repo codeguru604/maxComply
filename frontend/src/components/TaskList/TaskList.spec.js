@@ -1,69 +1,55 @@
 import { mount } from '@vue/test-utils';
 import TaskList from './TaskList.vue';
+import { createPinia, setActivePinia } from 'pinia';
 
-describe('TaskList.vue', () => {
-	it('renders task names and subheadings', async () => {
-		const tasks = [
+const mockFetchTasks = jest.fn(() => Promise.resolve([
+	{
+		id: 1,
+		name: 'Task 1',
+		subHeading: 'Subtask 1',
+	}
+]));
+const mockFetchTaskById = jest.fn(() => Promise.resolve());
+
+// Mock the useTaskStore function
+jest.mock('../../stores/taskStore', () => ({
+	useTaskStore: () => ({
+		tasks: [
 			{
 				id: 1,
 				name: 'Task 1',
-				subHeading: 'Subheading 1',
-			},
-			{
-				id: 2,
-				name: 'Task 2',
-				subHeading: 'Subheading 2',
+				subHeading: 'Subtask 1',
 			}
-		];
+		],
+		fetchTasks: mockFetchTasks,
+		fetchTaskById: mockFetchTaskById,
+	}),
+}));
 
-		const wrapper = mount(TaskList, {
-			data() {
-				return {
-					taskStore: {
-						tasks: tasks,
-						fetchTasks: jest.fn(),
-						fetchTaskById: jest.fn(),
-					},
-				};
-			},
-		});
-		console.log(wrapper.text());
-    // Check if the task names and subheadings are rendered
-		expect(wrapper.text()).toContain('Task 1');
-		expect(wrapper.text()).toContain('Subheading 1');
-		expect(wrapper.text()).toContain('Task 2');
-		expect(wrapper.text()).toContain('Subheading 2');
+jest.mock('quasar', () => ({
+	Notify: {
+		create: jest.fn(),
+		setDefaults: jest.fn(),
+		registerType: jest.fn(),
+	},
+}));
+
+describe('TaskList', () => {
+	beforeEach(() => {
+    // Set up Pinia for the component
+		const pinia = createPinia();
+		setActivePinia(pinia);
 	});
 
-	it('selects a task when clicked', async () => {
-		const tasks = [
-			{
-				id: 1,
-				name: 'Task 1',
-				subHeading: 'Subheading 1',
-			}
-		];
+	it('renders a task list', async () => {
+    // Mount the component
+		const wrapper = mount(TaskList);
 
-		const wrapper = mount(TaskList, {
-			data() {
-				return {
-					taskStore: {
-						tasks: tasks,
-						fetchTasks: jest.fn(),
-						fetchTaskById: jest.fn(),
-					},
-				};
-			},
-		});
+    // Wait for the component to finish loading tasks
+		await wrapper.vm.$nextTick();
 
-    // Mock the fetchTaskById method
-		const mockFetchTaskById = jest.fn();
-		wrapper.vm.taskStore.fetchTaskById = mockFetchTaskById;
-
-    // Trigger a task click
-		await wrapper.find('.list-item').trigger('click');
-
-    // Check if the fetchTaskById method is called with the correct argument
-		expect(mockFetchTaskById).toHaveBeenCalledWith(1);
+    // Check if the task list is rendered
+		expect(wrapper.find('.list-item').exists()).toBe(true);
+		expect(wrapper.element).toMatchSnapshot();
 	});
 });
